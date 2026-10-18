@@ -1,0 +1,122 @@
+﻿@page
+@model RazorPageBase.Areas.Identity.Pages.Account.Manage.UI.UsersModel
+@{
+    ViewData["Title"] = "使用者管理";
+   //Layout = "/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
+
+    
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Identity 使用者管理</h2>
+
+<nav class="nav nav-pills mb-3">
+    <a class="nav-link active" asp-page="./Users">使用者管理</a>
+    <a class="nav-link " asp-page="./Roles">角色管理</a>
+</nav>
+
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="alert alert-info" role="alert">@Model.StatusMessage</div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<section class="mb-4">
+    <h3>建立使用者</h3>
+    <form method="post" asp-page-handler="Create">
+        <div class="row g-2">
+            <div class="col-md-4">
+                <label asp-for="Input.Email" class="form-label">Email</label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Input.Password" class="form-label">初始密碼</label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Input.FullName" class="form-label">顯示名稱</label>
+                <input asp-for="Input.FullName" class="form-control" />
+            </div>
+ 
+            <div class="col-md-4">
+                <label asp-for="Input.Role" class="form-label">角色</label>
+                <select asp-for="Input.Role" class="form-select">
+                    <option value="">不指定角色</option>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <option value="@role">@role</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">建立使用者</button>
+    </form>
+</section>
+
+<section>
+    <h3>使用者清單</h3>
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>顯示名稱</th>
+ 
+                    <th>角色</th>
+                    <th>角色操作</th>
+                    <th>帳號操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>@user.FullName</td>
+ 
+                        <td>@string.Join(", ", user.Roles)</td>
+                        <td>
+                            @foreach (var role in Model.Roles)
+                            {
+                                if (user.Roles.Contains(role))
+                                {
+                                    <form method="post" asp-page-handler="RemoveFromRole" class="d-inline">
+                                        <input type="hidden" name="userId" value="@user.Id" />
+                                        <input type="hidden" name="roleName" value="@role" />
+                                        <button type="submit" class="btn btn-sm btn-outline-warning mb-1">
+                                            移除 @role
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-page-handler="AddToRole" class="d-inline">
+                                        <input type="hidden" name="userId" value="@user.Id" />
+                                        <input type="hidden" name="roleName" value="@role" />
+                                        <button type="submit" class="btn btn-sm btn-outline-success mb-1">
+                                            加入 @role
+                                        </button>
+                                    </form>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="Delete"
+                                  onsubmit="return confirm('確定要刪除此使用者？');">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">刪除</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

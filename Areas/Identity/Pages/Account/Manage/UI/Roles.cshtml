@@ -1,0 +1,68 @@
+﻿@page
+@model RazorPageBase.Areas.Identity.Pages.Account.Manage.UI.RolesModel
+@{
+    ViewData["Title"] = "角色管理";
+    //Layout = "/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
+
+    Layout = "/Pages/Shared/_Layout.cshtml";
+
+
+}
+
+<h2>Identity 角色管理</h2>
+
+<nav class="nav nav-pills mb-3">
+    <a class="nav-link" asp-page="./Users">使用者管理</a>
+    <a class="nav-link active" asp-page="./Roles">角色管理</a>
+</nav>
+
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="alert alert-info" role="alert">@Model.StatusMessage</div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form method="post" asp-page-handler="Create" class="mb-4">
+    <label asp-for="Input.Name" class="form-label">新角色名稱</label>
+    <div class="input-group">
+        <input asp-for="Input.Name" class="form-control" />
+        <button type="submit" class="btn btn-primary">建立角色</button>
+    </div>
+    <span asp-validation-for="Input.Name" class="text-danger"></span>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>角色</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model.Roles)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>
+                    @if (!string.Equals(role.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <form method="post" asp-page-handler="Delete"
+                              onsubmit="return confirm('確定要刪除此角色？');">
+                            <input type="hidden" name="roleId" value="@role.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger">刪除</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-muted">系統保留角色</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

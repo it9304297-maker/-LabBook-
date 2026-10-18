@@ -9,11 +9,16 @@ RazorPage 基礎 startup project, including TW localization Identity with two ro
 
 6. 啓用註冊寄信功能:
 步驟 1.
-打開應用程式進入點 Program.cs，將你的 EmailSender 註冊進依賴注入 (DI) 容器中： 確保你的 AddDefaultIdentity 設定中，如果有開啟 
+打開應用程式進入點 Program.cs，將你的 EmailSender 註冊進依賴注入 (DI) 容器中： 確保你的 AddDefaultIdentity 設定中，如果有開啟
+
 options.SignIn.RequireConfirmedAccount = true
+
 options.SignIn.RequireConfirmedEmail = true
+
 Identity 就會自動在使用者註冊時調用這個 EmailSender 發送驗證信。
+
 Program.cs，找到這行為註記//拿掉
+
 // 4. Email sender
 //builder.Services.AddTransient<IEmailSender, EmailSender>();
 

@@ -16,7 +16,7 @@ RazorPage 基礎 startup project, including TW localization Identity with two ro
 
     options.SignIn.RequireConfirmedEmail = true
 
-Identity 就會自動在使用者註冊時調用這個 EmailSender 發送驗證信。
+Identity 會在使用者註冊時自動調用這個 EmailSender 發送驗證信。
 
 Program.cs，找到這行為註記//拿掉
 
@@ -31,12 +31,12 @@ Program.cs，找到這行為註記//拿掉
 輸入一個自訂名稱（例如：MyAspNetCoreApp），點選產生。
 複製這串 16 位元的密碼（程式設定時要使用，中間的空格請忽略）。 
 
-  步驟 3：安裝 MailKit 套件與實作 IEmailSender
-透過 工具>NuGet套件管理員>套件管理主控台, 輸入MailKit搜尋, 打勾版本 >安裝 MailKit：
+步驟 3：安裝 MailKit 套件與實作 IEmailSender
+透過: 工具>NuGet套件管理員>套件管理主控台, 輸入MailKit搜尋, 打勾版本 >安裝 MailKit：
 
-  步驟 4.  打開輸appsettings.json,填入smtp的資料
+步驟 4.  打開輸appsettings.json,填入smtp的資料
 
-  步驟 5：測試註冊是否有寄信驗證(有可能被判為垃圾信.因來源是localhost)
+步驟 5：測試註冊是否有寄信驗證(有可能被判為垃圾信.因來源是localhost)
 因為伺服器沒有設定ip.故驗證信連結為localhost.要在同一台機器,執行專案.用gmail信箱來收信測.
  
 

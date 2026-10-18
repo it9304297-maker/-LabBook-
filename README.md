@@ -8,7 +8,7 @@ RazorPage 基礎 startup project, including TW localization Identity with two ro
 5. 到資料庫把AspNetUserRoles表格,新增一筆Admin的對應.(先至AspNetUsers查好User的Id,AspNetRoles查好Admin角色的Id)
 
 6. 啓用註冊寄信功能:
-   步驟 1.
+步驟 1.
 打開應用程式進入點 Program.cs，將你的 EmailSender 註冊進依賴注入 (DI) 容器中： 確保你的 AddDefaultIdentity 設定中，如果有開啟 
 options.SignIn.RequireConfirmedAccount = true
 options.SignIn.RequireConfirmedEmail = true

@@ -1,0 +1,22 @@
+@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "註冊確認";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+    本應用目前尚未設定實際的電子郵件發送服務，請參閱 <a href="https://aka.ms/aspaccountconf">說明文件</a> 以設定實際的電子郵件發送。
+    通常系統會發送以下連結： <a id="confirm-link" href="@Model.EmailConfirmationUrl">點此確認您的帳號</a>
+</p>
+    }
+    else
+    {
+<p>
+        請檢查您的電子郵件並完成帳號確認。
+</p>
+    }
+}

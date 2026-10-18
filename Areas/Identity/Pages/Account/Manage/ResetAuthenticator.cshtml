@@ -1,0 +1,24 @@
+@page
+@model ResetAuthenticatorModel
+@{
+    ViewData["Title"] = "重設驗證器金鑰";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["Title"]</h3>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>重設驗證器金鑰後，您的驗證器應用程式將無法使用，直到您重新設定它。</strong>
+    </p>
+    <p>
+        此程序會停用 2FA，直到您驗證驗證器應用程式。
+        若未完成驗證器設定，可能會導致無法存取您的帳號。
+    </p>
+</div>
+<div>
+    <form id="reset-authenticator-form" method="post">
+        <button id="reset-authenticator-button" class="btn btn-danger" type="submit">重設驗證器金鑰</button>
+    </form>
+</div>

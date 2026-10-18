@@ -1,1 +1,0 @@
-下面我將腳本寫成檔案內容，請在專案根目錄（C:\2\repos\RazorPageBase\RazorPageBase）建立檔案 scripts\overwrite-identity-localization.ps1 並貼上以下內容，然後用 pwsh.exe .\scripts\overwrite-identity-localization.ps1 執行。

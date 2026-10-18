@@ -8,21 +8,23 @@ RazorPage 基礎 startup project, including TW localization Identity with two ro
 5. 到資料庫把AspNetUserRoles表格,新增一筆Admin的對應.(先至AspNetUsers查好User的Id,AspNetRoles查好Admin角色的Id)
 
 6. 啓用註冊寄信功能:
+
 步驟 1.
 打開應用程式進入點 Program.cs，將你的 EmailSender 註冊進依賴注入 (DI) 容器中： 確保你的 AddDefaultIdentity 設定中，如果有開啟
 
-options.SignIn.RequireConfirmedAccount = true
+    options.SignIn.RequireConfirmedAccount = true
 
-options.SignIn.RequireConfirmedEmail = true
+    options.SignIn.RequireConfirmedEmail = true
 
 Identity 就會自動在使用者註冊時調用這個 EmailSender 發送驗證信。
 
 Program.cs，找到這行為註記//拿掉
 
-// 4. Email sender
-//builder.Services.AddTransient<IEmailSender, EmailSender>();
+    // 4. Email sender
+    //builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-  步驟 2. 由於 Gmail 的安全機制，你不能直接在程式碼中填入你的 Google 登入密碼。
+
+步驟 2. 由於 Gmail 的安全機制，你不能直接在程式碼中填入你的 Google 登入密碼。
 登入你的 Google 帳戶安全設定。
 確保帳戶已啟用 「兩步驟驗證」。
 在搜尋欄輸入「應用程式密碼」或在兩步驟驗證選單底部找到 「應用程式密碼 (App Passwords)」。

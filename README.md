@@ -2,10 +2,11 @@
 RazorPage 基礎 startup project, including TW localization Identity with two role (Admin, User)
 
 1. 下載後解壓縮,把目錄的唯讀屬性取消. 右鍵>內容>唯讀 不要打勾, 用VS打開專案重建.
-2. 打開"工具>Nuget套件管理員>套件管理主控台", 輸入: Add-Migration init1
-3. 再輸入: Update-Database
-4. 執行專案.註冊一位管理者帳號.手動至AspNetUsers表格的EmailConfirmed欄位改成True.
-5. 到資料庫把AspNetUserRoles表格,新增一筆Admin的對應.(先至AspNetUsers查好User的Id,AspNetRoles查好Admin角色的Id)
+2. 打開"工具>Nuget套件管理員>套件管理主控台",
+3. 輸入: Add-Migration init1
+4. 再輸入: Update-Database
+5. IdentitySeeder會自動建立角色 Admin, User; 預設管理者:admin@pccu.com/123456 使用者:user1@pccu.com/123456
+ 
 
 6. 啓用註冊寄信功能:
 

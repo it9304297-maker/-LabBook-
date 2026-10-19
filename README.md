@@ -1,4 +1,4 @@
-# RazorPageBaseTW
+# RazorPageBaseTW v0.2tw
 RazorPage 基礎 startup project, including TW localization Identity with two role (Admin, User)
 
 1. 下載後解壓縮,把目錄的唯讀屬性取消. 右鍵>內容>唯讀 不要打勾, 用VS打開專案重建.

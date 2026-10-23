@@ -1,0 +1,10 @@
+# Visual Studio / .NET build output
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.log
+# 個人機密設定（Gmail 應用程式密碼請放這裡，不要上傳）
+appsettings.Development.local.json
+secrets.json

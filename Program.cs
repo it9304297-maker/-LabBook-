@@ -128,6 +128,13 @@ app.MapRazorPages();
 //app.MapRazorPages()
 //  .WithStaticAssets();
 
+// 5.9 啟動時自動套用 Migration（等同 Update-Database），資料庫不存在會自動建立
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<RazorPageBaseContext>();
+    await db.Database.MigrateAsync();
+}
+
 // 6. Seed roles
 await IdentitySeeder.SeedRolesAsync(app.Services);
 

@@ -54,6 +54,12 @@ public class Instrument
     [StringLength(30)]
     public string? Custodian { get; set; }
 
+    // ch01 教學第 7 步「新增欄位」：新增後執行 Add-Migration AddExtension → Update-Database
+    [Display(Name = "管理人分機")]
+    [RegularExpression(@"^\d{3,5}$", ErrorMessage = "{0}請輸入 3–5 位數字")]
+    [StringLength(5)]
+    public string? Extension { get; set; }
+
     [Display(Name = "說明")]
     [DataType(DataType.MultilineText)]
     [StringLength(500)]

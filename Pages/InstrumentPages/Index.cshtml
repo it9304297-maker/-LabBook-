@@ -72,6 +72,10 @@
                     <ul class="list-unstyled small mb-3">
                         <li><i class="bi bi-tag"></i> @item.Category.GetDisplayName()</li>
                         <li><i class="bi bi-geo-alt"></i> @item.Location</li>
+                        @if (!string.IsNullOrEmpty(item.Custodian))
+                        {
+                            <li><i class="bi bi-telephone"></i> @item.Custodian@(string.IsNullOrEmpty(item.Extension) ? "" : $"（分機 {item.Extension}）")</li>
+                        }
                         <li><i class="bi bi-clock"></i> 單次最多 @item.MaxHoursPerBooking 小時</li>
                         @if (item.RequiresTraining)
                         {

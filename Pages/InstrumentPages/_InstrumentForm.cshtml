@@ -42,11 +42,16 @@
         <input asp-for="MaxHoursPerBooking" class="form-control" min="1" max="24" />
         <span asp-validation-for="MaxHoursPerBooking" class="text-danger small"></span>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label asp-for="Custodian" class="form-label"></label>
         <input asp-for="Custodian" class="form-control" />
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
+        <label asp-for="Extension" class="form-label"></label>
+        <input asp-for="Extension" class="form-control" placeholder="2301" />
+        <span asp-validation-for="Extension" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
         <label asp-for="PurchaseDate" class="form-label"></label>
         <input asp-for="PurchaseDate" class="form-control" />
         <span asp-validation-for="PurchaseDate" class="text-danger small"></span>

@@ -61,7 +61,8 @@ public static class IdentitySeeder
             {
                 UserName = email,
                 Email = email,
-                FullName = fullName
+                FullName = fullName,
+                EmailConfirmed = true // 測試帳號直接設為已驗證，開啟 Email 驗證後才能登入
             };
 
             var createResult = await userManager.CreateAsync(user, password);
@@ -74,6 +75,13 @@ public static class IdentitySeeder
                 throw new InvalidOperationException(
                     $"Cannot create seed user '{email}': {errors}");
             }
+        }
+
+        // 已存在但尚未驗證的測試帳號（開啟 Email 驗證前建立的）→ 補設為已驗證
+        if (!user.EmailConfirmed)
+        {
+            user.EmailConfirmed = true;
+            await userManager.UpdateAsync(user);
         }
 
         if (await userManager.IsInRoleAsync(user, role))

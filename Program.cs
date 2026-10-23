@@ -23,8 +23,8 @@ builder.Services
         options.Password.RequireNonAlphanumeric = false;
 
         // Account confirmation
-        options.SignIn.RequireConfirmedAccount = false;
-        options.SignIn.RequireConfirmedEmail = false; //True for send email to confirm
+        options.SignIn.RequireConfirmedAccount = true;  // 講義第7頁：開啟註冊 Email 驗證
+        options.SignIn.RequireConfirmedEmail = true; //True for send email to confirm
 
         // Lockout
         options.Lockout.AllowedForNewUsers = true;
@@ -65,8 +65,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 
 
-// 4. Email sender
-//builder.Services.AddTransient<IEmailSender, EmailSender>();
+// 4. Email sender（講義第8頁：把註解拿掉）
+// Gmail 帳號與應用程式密碼請放在「管理使用者密碼」(secrets.json)，不要寫在 appsettings.json
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // 5. Razor Pages
 builder.Services.AddRazorPages(options =>

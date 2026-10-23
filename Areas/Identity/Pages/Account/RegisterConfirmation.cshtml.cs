@@ -61,7 +61,8 @@ public class RegisterConfirmationModel : PageModel
         Email = email;
 
         // Once you add a real email sender, you should remove this code that lets you confirm the account
-        DisplayConfirmAccountLink = true;
+        // 已啟用 Gmail 寄信（EmailSender），所以關閉「畫面直接顯示驗證連結」，改為必須到信箱收信驗證
+        DisplayConfirmAccountLink = false;
 
 
         if (DisplayConfirmAccountLink)

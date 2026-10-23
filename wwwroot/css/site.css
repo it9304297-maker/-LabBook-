@@ -29,3 +29,110 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+/* ================= LabBook 儀器預約系統 主題 ================= */
+:root {
+  --lab-primary: #0f5c8c;
+  --lab-primary-2: #1a8a9c;
+  --lab-bg: #f4f7fa;
+  --bs-primary: #0f5c8c;
+  --bs-primary-rgb: 15, 92, 140;
+  --bs-link-color: #0f5c8c;
+  --bs-link-color-rgb: 15, 92, 140;
+}
+
+body {
+  background: var(--lab-bg);
+  font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei", sans-serif;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--lab-primary);
+  --bs-btn-border-color: var(--lab-primary);
+  --bs-btn-hover-bg: #0b4870;
+  --bs-btn-hover-border-color: #0b4870;
+  --bs-btn-active-bg: #0b4870;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--lab-primary);
+  --bs-btn-border-color: var(--lab-primary);
+  --bs-btn-hover-bg: var(--lab-primary);
+  --bs-btn-hover-border-color: var(--lab-primary);
+  --bs-btn-active-bg: var(--lab-primary);
+}
+.text-primary { color: var(--lab-primary) !important; }
+.progress-bar { background: linear-gradient(90deg, var(--lab-primary), var(--lab-primary-2)); }
+
+/* 導覽列 */
+.bg-lab { background: linear-gradient(90deg, var(--lab-primary), var(--lab-primary-2)); }
+.bg-lab .navbar-brand, .bg-lab .navbar-brand:hover { color: #fff !important; }
+.bg-lab .nav-link { color: rgba(255,255,255,.85) !important; }
+.bg-lab .nav-link:hover { color: #fff !important; }
+
+/* 首頁 Hero */
+.hero {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,.18) 0, transparent 40%),
+    linear-gradient(135deg, var(--lab-primary), var(--lab-primary-2));
+}
+.hero-stat {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 1rem;
+  padding: 1.25rem .5rem;
+  backdrop-filter: blur(4px);
+}
+.flow-step {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 .125rem .5rem rgba(0,0,0,.05);
+  height: 100%;
+}
+
+/* 圖示圓圈 */
+.icon-circle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  background: rgba(15, 92, 140, .1); color: var(--lab-primary);
+  font-size: 1.25rem;
+}
+.icon-circle-lg { width: 3.5rem; height: 3.5rem; font-size: 1.6rem; }
+
+/* 卡片 */
+.card { border-radius: .9rem; }
+.instrument-card { transition: transform .15s ease, box-shadow .15s ease; }
+.instrument-card:hover { transform: translateY(-3px); box-shadow: 0 .5rem 1.25rem rgba(15,92,140,.15) !important; }
+.stat-card { border-left: 4px solid var(--lab-primary) !important; }
+.stat-card.accent-warning { border-left-color: #f0ad4e !important; }
+.stat-card.accent-success { border-left-color: #2e9e6a !important; }
+.stat-card.ring { outline: 2px solid var(--lab-primary); }
+
+/* 預約表單費用試算 */
+.fee-box {
+  background: #eef6fb; border: 1px dashed #9cc3dc; border-radius: .5rem;
+  padding: .55rem .9rem; min-height: 38px;
+}
+
+/* 預約進度條 */
+.progress-steps { display: flex; justify-content: space-between; position: relative; }
+.progress-steps::before {
+  content: ""; position: absolute; top: 1rem; left: 10%; right: 10%;
+  height: 3px; background: #dee2e6; z-index: 0;
+}
+.progress-steps .step { flex: 1; text-align: center; position: relative; z-index: 1; }
+.progress-steps .dot {
+  display: inline-flex; width: 2rem; height: 2rem; border-radius: 50%;
+  align-items: center; justify-content: center;
+  background: #dee2e6; color: #6c757d; font-weight: 700;
+}
+.progress-steps .step.done .dot { background: var(--lab-primary); color: #fff; }
+.progress-steps .label { display: block; font-size: .85rem; margin-top: .25rem; color: #6c757d; }
+.progress-steps .step.done .label { color: var(--lab-primary); font-weight: 600; }
+
+.table > :not(caption) > * > * { padding: .75rem .75rem; }
+.footer { background: #fff; line-height: 60px; }
+
+@media print {
+  .navbar, .footer, .breadcrumb, .d-print-none { display: none !important; }
+  body { background: #fff; }
+}

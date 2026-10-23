@@ -1,0 +1,85 @@
+@page
+@model RazorPageBase.Pages.Reservations.DetailsModel
+
+@{
+    ViewData["Title"] = "預約詳細";
+    var r = Model.Reservation;
+    var steps = new[] { ReservationStatus.Pending, ReservationStatus.Approved, ReservationStatus.Completed };
+    int current = Array.IndexOf(steps, r.Status);
+    bool ended = r.Status == ReservationStatus.Rejected || r.Status == ReservationStatus.Cancelled;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="./Index">預約</a></li>
+        <li class="breadcrumb-item active">#@r.Id.ToString("D5")</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="text-muted small">預約單號 #@r.Id.ToString("D5")</div>
+                        <h1 class="h4 mb-0">@r.Instrument?.Name</h1>
+                        <small class="text-muted">@r.Instrument?.AssetCode · @r.Instrument?.Location</small>
+                    </div>
+                    <span class="badge fs-6 @r.Status.BadgeClass()">@r.Status.GetDisplayName()</span>
+                </div>
+
+                <!-- 流程進度 -->
+                @if (ended)
+                {
+                    <div class="alert @(r.Status == ReservationStatus.Rejected ? "alert-danger" : "alert-secondary")">
+                        此預約@(r.Status.GetDisplayName())@(string.IsNullOrEmpty(r.AdminNote) ? "" : "：" + r.AdminNote)
+                    </div>
+                }
+                else
+                {
+                    <div class="progress-steps mb-4">
+                        @for (int i = 0; i < steps.Length; i++)
+                        {
+                            <div class="step @(i <= current ? "done" : "")">
+                                <span class="dot">@(i + 1)</span>
+                                <span class="label">@steps[i].GetDisplayName()</span>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.StartTime)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.StartTime)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.EndTime)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.EndTime)（@r.Hours 小時）</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.ProjectTitle)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.ProjectTitle)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.Advisor)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.Advisor)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.SampleCount)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.SampleCount)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.UserEmail)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.UserEmail)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.Purpose)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.Purpose)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.TotalFee)</dt>
+                    <dd class="col-sm-8 fw-bold text-primary">NT$ @Html.DisplayFor(model => model.Reservation.TotalFee)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.AdminNote)</dt>
+                    <dd class="col-sm-8">@(r.AdminNote ?? "—")</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Reservation.CreatedAt)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Reservation.CreatedAt)</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-transparent d-flex gap-2">
+                @if (r.Status == ReservationStatus.Pending && r.StartTime > DateTime.Now)
+                {
+                    <a asp-page="./Edit" asp-route-id="@r.Id" class="btn btn-outline-primary"><i class="bi bi-pencil"></i> 修改</a>
+                }
+                <a asp-page="./Index" class="btn btn-link">返回列表</a>
+                <button onclick="window.print()" class="btn btn-outline-secondary ms-auto d-print-none"><i class="bi bi-printer"></i> 列印</button>
+            </div>
+        </div>
+    </div>
+</div>

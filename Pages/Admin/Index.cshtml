@@ -1,10 +1,92 @@
-﻿@page
+@page
 @model RazorPageBase.Pages.Admin.IndexModel
 @{
+    ViewData["Title"] = "管理後台";
 }
 
- 
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div>
+        <h1 class="h3 mb-0"><i class="bi bi-speedometer2 text-primary"></i> 管理後台</h1>
+        <small class="text-muted">只有 Admin 角色的使用者能進入此頁面</small>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-page="/Reservations/Index" asp-route-StatusFilter="Pending" asp-route-Scope="all" class="btn btn-warning">
+            <i class="bi bi-clipboard-check"></i> 審核預約 <span class="badge text-bg-light">@Model.PendingCount</span>
+        </a>
+        <a asp-page="/Instruments/Create" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i> 新增儀器</a>
+    </div>
+</div>
 
-<h1>管理員首頁</h1>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card border-0 shadow-sm h-100"><div class="card-body">
+            <div class="text-muted small"><i class="bi bi-cpu"></i> 儀器（可預約 / 總數）</div>
+            <div class="fs-2 fw-bold">@Model.AvailableCount <small class="fs-6 text-muted">/ @Model.InstrumentCount</small></div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card border-0 shadow-sm h-100 accent-warning"><div class="card-body">
+            <div class="text-muted small"><i class="bi bi-hourglass-split"></i> 待審核預約</div>
+            <div class="fs-2 fw-bold">@Model.PendingCount</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card border-0 shadow-sm h-100 accent-success"><div class="card-body">
+            <div class="text-muted small"><i class="bi bi-cash-coin"></i> 本月預估收入</div>
+            <div class="fs-2 fw-bold">NT$ @Model.MonthRevenue.ToString("N0")</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card stat-card border-0 shadow-sm h-100"><div class="card-body">
+            <div class="text-muted small"><i class="bi bi-people"></i> 註冊會員</div>
+            <div class="fs-2 fw-bold">@Model.UserCount</div>
+        </div></div>
+    </div>
+</div>
 
-<p>只有 Admin 角色的使用者能進入此頁面。</p>
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-bar-chart"></i> 近 30 天儀器使用率</div>
+            <div class="card-body">
+                @foreach (var u in Model.Usage)
+                {
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small">
+                            <span class="fw-semibold">@u.Name</span>
+                            <span class="text-muted">@u.Count 次 · @u.Hours.ToString("0.#") 小時 · NT$ @u.Revenue.ToString("N0")</span>
+                        </div>
+                        <div class="progress" role="progressbar" style="height: 10px">
+                            <div class="progress-bar" style="width: @(Math.Min(100, Math.Max(u.Utilization, 1)))%"></div>
+                        </div>
+                        <small class="text-muted">使用率 @u.Utilization%</small>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white fw-semibold d-flex justify-content-between">
+                <span><i class="bi bi-inbox"></i> 最近待審核</span>
+                <a asp-page="/Reservations/Index" asp-route-StatusFilter="Pending" asp-route-Scope="all" class="small">全部</a>
+            </div>
+            <ul class="list-group list-group-flush">
+                @if (!Model.PendingList.Any())
+                {
+                    <li class="list-group-item text-muted">目前沒有待審核的預約 🎉</li>
+                }
+                @foreach (var r in Model.PendingList)
+                {
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-semibold">@r.Instrument?.Name</span>
+                            <small>NT$ @r.TotalFee.ToString("N0")</small>
+                        </div>
+                        <small class="text-muted">@r.StartTime.ToString("MM/dd HH:mm")–@r.EndTime.ToString("HH:mm") · @r.UserEmail</small>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

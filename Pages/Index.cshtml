@@ -1,10 +1,69 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "首頁";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero rounded-4 p-4 p-md-5 mb-5 text-white">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <span class="badge rounded-pill text-bg-light text-primary mb-3"><i class="bi bi-stars"></i> 貴重儀器共享平台</span>
+            <h1 class="display-5 fw-bold">線上預約實驗室儀器<br />不用再填紙本登記表</h1>
+            <p class="lead opacity-75 mb-4">即時查看空檔、自動檢查時段衝突、自動試算費用，管理員線上審核，一站完成。</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a asp-page="/Instruments/Index" class="btn btn-light btn-lg"><i class="bi bi-grid-3x3-gap"></i> 瀏覽儀器</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-page="/Reservations/Create" class="btn btn-outline-light btn-lg"><i class="bi bi-calendar-plus"></i> 立即預約</a>
+                }
+                else
+                {
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-light btn-lg"><i class="bi bi-box-arrow-in-right"></i> 登入預約</a>
+                }
+            </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block">
+            <div class="row g-3 text-center">
+                <div class="col-6"><div class="hero-stat"><div class="fs-1 fw-bold">@Model.InstrumentCount</div><small>服務中儀器</small></div></div>
+                <div class="col-6"><div class="hero-stat"><div class="fs-1 fw-bold">@Model.CategoryCount</div><small>儀器類別</small></div></div>
+                <div class="col-6"><div class="hero-stat"><div class="fs-1 fw-bold">@Model.TodayBookings</div><small>今日已核准預約</small></div></div>
+                <div class="col-6"><div class="hero-stat"><div class="fs-1 fw-bold">24h</div><small>線上申請</small></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-5">
+    <h2 class="h4 mb-4 text-center">預約流程</h2>
+    <div class="row g-4 text-center">
+        <div class="col-md-3"><div class="flow-step"><span class="icon-circle icon-circle-lg mb-2"><i class="bi bi-person-check"></i></span><h3 class="h6">1. 註冊 / 登入</h3><p class="small text-muted mb-0">使用學校信箱註冊會員</p></div></div>
+        <div class="col-md-3"><div class="flow-step"><span class="icon-circle icon-circle-lg mb-2"><i class="bi bi-search"></i></span><h3 class="h6">2. 選擇儀器</h3><p class="small text-muted mb-0">依類別、地點、價格搜尋</p></div></div>
+        <div class="col-md-3"><div class="flow-step"><span class="icon-circle icon-circle-lg mb-2"><i class="bi bi-calendar2-week"></i></span><h3 class="h6">3. 填寫預約</h3><p class="small text-muted mb-0">系統自動檢查衝突並試算費用</p></div></div>
+        <div class="col-md-3"><div class="flow-step"><span class="icon-circle icon-circle-lg mb-2"><i class="bi bi-patch-check"></i></span><h3 class="h6">4. 管理員審核</h3><p class="small text-muted mb-0">核准後依時段到場使用</p></div></div>
+    </div>
+</section>
+
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4 mb-0">熱門儀器</h2>
+        <a asp-page="/Instruments/Index">查看全部 <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model.Featured)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 instrument-card">
+                    <div class="card-body">
+                        <span class="icon-circle mb-2"><i class="bi @item.Category.Icon()"></i></span>
+                        <h3 class="h5">@item.Name</h3>
+                        <p class="small text-muted mb-2">@item.Brand · @item.Location</p>
+                        <div class="fw-bold text-primary">NT$ @item.HourlyRate.ToString("N0") / 小時</div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <a asp-page="/Instruments/Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">查看詳細與空檔</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

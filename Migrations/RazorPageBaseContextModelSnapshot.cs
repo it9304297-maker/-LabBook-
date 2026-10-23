@@ -258,6 +258,10 @@ namespace RazorPageBase.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("Extension")
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
                     b.Property<decimal>("HourlyRate")
                         .HasColumnType("decimal(18, 2)");
 
@@ -299,6 +303,7 @@ namespace RazorPageBase.Migrations
                             Category = 1,
                             Custodian = "陳助理",
                             Description = "適用有機化合物分離與定量分析，需自備移動相。",
+                            Extension = "2301",
                             HourlyRate = 800m,
                             Location = "理學院 B205",
                             MaxHoursPerBooking = 6,
@@ -315,6 +320,7 @@ namespace RazorPageBase.Migrations
                             Category = 0,
                             Custodian = "林助理",
                             Description = "波長範圍 190–1100 nm，可做吸收光譜與動力學量測。",
+                            Extension = "2302",
                             HourlyRate = 300m,
                             Location = "理學院 B201",
                             MaxHoursPerBooking = 4,
@@ -331,6 +337,7 @@ namespace RazorPageBase.Migrations
                             Category = 2,
                             Custodian = "張技正",
                             Description = "表面形貌觀察，附 EDS 元素分析，樣品需先鍍金。",
+                            Extension = "5101",
                             HourlyRate = 2500m,
                             Location = "貴儀中心 101",
                             MaxHoursPerBooking = 3,
@@ -347,6 +354,7 @@ namespace RazorPageBase.Migrations
                             Category = 3,
                             Custodian = "陳助理",
                             Description = "溫度範圍室溫至 1000°C，目前更換天平模組中。",
+                            Extension = "2301",
                             HourlyRate = 600m,
                             Location = "理學院 B210",
                             MaxHoursPerBooking = 8,
@@ -363,6 +371,7 @@ namespace RazorPageBase.Migrations
                             Category = 4,
                             Custodian = "黃助理",
                             Description = "96 孔，5 通道螢光偵測，適用基因表現分析。",
+                            Extension = "3304",
                             HourlyRate = 500m,
                             Location = "生科館 3F 304",
                             MaxHoursPerBooking = 4,
@@ -379,6 +388,7 @@ namespace RazorPageBase.Migrations
                             Category = 0,
                             Custodian = "林助理",
                             Description = "附 ATR 配件，固體、液體樣品皆可直接量測。",
+                            Extension = "2302",
                             HourlyRate = 400m,
                             Location = "理學院 B201",
                             MaxHoursPerBooking = 4,

@@ -76,10 +76,10 @@ builder.Services.AddRazorPages(options =>
         "/Admin", "AdminOnly");
 
     // 儀器預約系統權限：預約需登入；儀器新增/修改/刪除限管理員
-    options.Conventions.AuthorizeFolder("/Reservations");
-    options.Conventions.AuthorizePage("/Instruments/Create", "AdminOnly");
-    options.Conventions.AuthorizePage("/Instruments/Edit", "AdminOnly");
-    options.Conventions.AuthorizePage("/Instruments/Delete", "AdminOnly");
+    options.Conventions.AuthorizeFolder("/ReservationPages");
+    options.Conventions.AuthorizePage("/InstrumentPages/Create", "AdminOnly");
+    options.Conventions.AuthorizePage("/InstrumentPages/Edit", "AdminOnly");
+    options.Conventions.AuthorizePage("/InstrumentPages/Delete", "AdminOnly");
 }).AddViewLocalization();   //註冊 Razor Pages 服務，並鏈結 View .cshtml 本地化支援
 
 // 5.1. 註冊 MVC 服務，並鏈結 View 本地化支援

@@ -2,107 +2,103 @@
 @model RazorPageBase.Pages.InstrumentPages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "儀器總覽";
+    bool isAdmin = User.IsInRole("Admin");
 }
 
-<h1>Index</h1>
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <div>
+        <h1 class="h3 mb-0"><i class="bi bi-grid-3x3-gap text-primary"></i> 儀器總覽</h1>
+        <small class="text-muted">共 @Model.Instrument.Count 台儀器</small>
+    </div>
+    @if (isAdmin)
+    {
+        <a asp-page="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> 新增儀器</a>
+    }
+</div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].AssetCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].HourlyRate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].MaxHoursPerBooking)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].RequiresTraining)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Custodian)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].PurchaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Instrument[0].Reservations)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Instrument) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.AssetCode)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.HourlyRate)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.MaxHoursPerBooking)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.RequiresTraining)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Custodian)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.PurchaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Reservations)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<form method="get" class="card card-body shadow-sm mb-4 border-0">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label small text-muted">關鍵字</label>
+            <input asp-for="SearchString" class="form-control" placeholder="名稱、財產編號、廠牌或地點" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small text-muted">類別</label>
+            <select asp-for="Category" asp-items="Model.Categories" class="form-select">
+                <option value="">全部類別</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label small text-muted">排序</label>
+            <select asp-for="SortOrder" class="form-select">
+                <option value="">財產編號</option>
+                <option value="name">名稱</option>
+                <option value="rate">收費 低→高</option>
+                <option value="rate_desc">收費 高→低</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <div class="form-check mt-2">
+                <input asp-for="OnlyAvailable" class="form-check-input" />
+                <label asp-for="OnlyAvailable" class="form-check-label">只看可預約</label>
+            </div>
+        </div>
+        <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-outline-primary"><i class="bi bi-search"></i></button>
+        </div>
+    </div>
+</form>
+
+@if (!Model.Instrument.Any())
+{
+    <div class="alert alert-light text-center py-5">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i> 找不到符合條件的儀器
+    </div>
 }
-    </tbody>
-</table>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var item in Model.Instrument)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 instrument-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="icon-circle"><i class="bi @item.Category.Icon()"></i></span>
+                        <span class="badge @item.Status.BadgeClass()">@item.Status.GetDisplayName()</span>
+                    </div>
+                    <h2 class="h5 card-title mb-1">@item.Name</h2>
+                    <div class="small text-muted mb-2">@item.AssetCode · @item.Brand</div>
+                    <ul class="list-unstyled small mb-3">
+                        <li><i class="bi bi-tag"></i> @item.Category.GetDisplayName()</li>
+                        <li><i class="bi bi-geo-alt"></i> @item.Location</li>
+                        <li><i class="bi bi-clock"></i> 單次最多 @item.MaxHoursPerBooking 小時</li>
+                        @if (item.RequiresTraining)
+                        {
+                            <li class="text-danger"><i class="bi bi-mortarboard"></i> 需完成教育訓練</li>
+                        }
+                    </ul>
+                    <div class="fs-5 fw-bold text-primary">NT$ @item.HourlyRate.ToString("N0") <small class="fs-6 text-muted fw-normal">/ 小時</small></div>
+                </div>
+                <div class="card-footer bg-transparent border-0 d-flex gap-2 pb-3">
+                    @if (item.Status == InstrumentStatus.Available)
+                    {
+                        <a asp-page="/ReservationPages/Create" asp-route-instrumentId="@item.Id" class="btn btn-primary btn-sm flex-grow-1">
+                            <i class="bi bi-calendar-plus"></i> 預約
+                        </a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary btn-sm flex-grow-1" disabled>暫停預約</button>
+                    }
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm" title="詳細"><i class="bi bi-info-circle"></i></a>
+                    @if (isAdmin)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm" title="編輯"><i class="bi bi-pencil"></i></a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm" title="刪除"><i class="bi bi-trash"></i></a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

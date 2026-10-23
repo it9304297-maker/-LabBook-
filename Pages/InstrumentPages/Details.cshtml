@@ -2,96 +2,98 @@
 @model RazorPageBase.Pages.InstrumentPages.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Instrument.Name;
 }
 
-<h1>Details</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="./Index">儀器總覽</a></li>
+        <li class="breadcrumb-item active">@Model.Instrument.Name</li>
+    </ol>
+</nav>
 
-<div>
-    <h4>Instrument</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.AssetCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.AssetCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Brand)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Brand)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Category)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Location)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Location)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.HourlyRate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.HourlyRate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.MaxHoursPerBooking)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.MaxHoursPerBooking)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.RequiresTraining)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.RequiresTraining)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Custodian)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Custodian)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.PurchaseDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.PurchaseDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Instrument.Reservations)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Instrument.Reservations)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Instrument.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="icon-circle icon-circle-lg"><i class="bi @Model.Instrument.Category.Icon()"></i></span>
+                    <div>
+                        <h1 class="h3 mb-0">@Model.Instrument.Name</h1>
+                        <span class="badge @Model.Instrument.Status.BadgeClass()">@Model.Instrument.Status.GetDisplayName()</span>
+                        @if (Model.Instrument.RequiresTraining)
+                        {
+                            <span class="badge text-bg-danger-subtle text-danger-emphasis border border-danger-subtle">需受訓認證</span>
+                        }
+                    </div>
+                </div>
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.AssetCode)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.AssetCode)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.Brand)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.Brand)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.Category)</dt>
+                    <dd class="col-sm-8">@Model.Instrument.Category.GetDisplayName()</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.Location)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.Location)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.HourlyRate)</dt>
+                    <dd class="col-sm-8">NT$ @Html.DisplayFor(model => model.Instrument.HourlyRate)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.MaxHoursPerBooking)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.MaxHoursPerBooking)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.Custodian)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.Custodian)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.PurchaseDate)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.PurchaseDate)</dd>
+                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Instrument.Description)</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Instrument.Description)</dd>
+                </dl>
+            </div>
+            <div class="card-footer bg-transparent d-flex gap-2">
+                @if (Model.Instrument.Status == InstrumentStatus.Available)
+                {
+                    <a asp-page="/ReservationPages/Create" asp-route-instrumentId="@Model.Instrument.Id" class="btn btn-primary"><i class="bi bi-calendar-plus"></i> 預約此儀器</a>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-page="./Edit" asp-route-id="@Model.Instrument.Id" class="btn btn-outline-secondary"><i class="bi bi-pencil"></i> 編輯</a>
+                }
+                <a asp-page="./Index" class="btn btn-link">返回列表</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="row g-3 mb-3">
+            <div class="col-6">
+                <div class="card stat-card border-0 shadow-sm"><div class="card-body">
+                    <div class="text-muted small">累計使用次數</div>
+                    <div class="fs-3 fw-bold">@Model.TotalBookings</div>
+                </div></div>
+            </div>
+            <div class="col-6">
+                <div class="card stat-card border-0 shadow-sm"><div class="card-body">
+                    <div class="text-muted small">累計使用時數</div>
+                    <div class="fs-3 fw-bold">@Model.TotalHours.ToString("0.#")</div>
+                </div></div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white fw-semibold"><i class="bi bi-calendar-week"></i> 未來 14 天已預約時段</div>
+            <ul class="list-group list-group-flush">
+                @if (!Model.UpcomingBookings.Any())
+                {
+                    <li class="list-group-item text-muted">目前沒有預約，時段皆可使用</li>
+                }
+                @foreach (var b in Model.UpcomingBookings)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>@b.StartTime.ToString("MM/dd (ddd) HH:mm") – @b.EndTime.ToString("HH:mm")</span>
+                        <span class="badge @b.Status.BadgeClass()">@b.Status.GetDisplayName()</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>

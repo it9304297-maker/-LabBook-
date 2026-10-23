@@ -2,95 +2,28 @@
 @model RazorPageBase.Pages.InstrumentPages.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "編輯儀器";
 }
 
-<h1>Edit</h1>
-
-<h4>Instrument</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Instrument.Id" />
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Instrument.Name" class="control-label"></label>
-                <input asp-for="Instrument.Name" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Instrument.Name" class="text-danger"></span>
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">
+                <h1 class="h4 mb-0"><i class="bi bi-pencil-square text-primary"></i> 編輯儀器</h1>
             </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Instrument.AssetCode" class="control-label"></label>
-                <input asp-for="Instrument.AssetCode" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Instrument.AssetCode" class="text-danger"></span>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <input type="hidden" asp-for="Instrument.Id" />
+                    <partial name="_InstrumentForm" for="Instrument" />
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> 儲存</button>
+                        <a asp-page="./Index" class="btn btn-outline-secondary">取消</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Brand" class="control-label"></label>
-                <input asp-for="Instrument.Brand" class="form-control" />
-                <span asp-validation-for="Instrument.Brand" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Category" class="control-label"></label>
-                <input asp-for="Instrument.Category" class="form-control" />
-                <span asp-validation-for="Instrument.Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Instrument.Location" class="control-label"></label>
-                <input asp-for="Instrument.Location" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Instrument.Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.HourlyRate" class="control-label"></label>
-                <input asp-for="Instrument.HourlyRate" class="form-control" />
-                <span asp-validation-for="Instrument.HourlyRate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.MaxHoursPerBooking" class="control-label"></label>
-                <input asp-for="Instrument.MaxHoursPerBooking" class="form-control" />
-                <span asp-validation-for="Instrument.MaxHoursPerBooking" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.RequiresTraining" class="control-label"></label>
-                <input asp-for="Instrument.RequiresTraining" class="form-check-input" />
-                <span asp-validation-for="Instrument.RequiresTraining" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Status" class="control-label"></label>
-                <input asp-for="Instrument.Status" class="form-control" />
-                <span asp-validation-for="Instrument.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Custodian" class="control-label"></label>
-                <input asp-for="Instrument.Custodian" class="form-control" />
-                <span asp-validation-for="Instrument.Custodian" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Description" class="control-label"></label>
-                <input asp-for="Instrument.Description" class="form-control" />
-                <span asp-validation-for="Instrument.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.PurchaseDate" class="control-label"></label>
-                <input asp-for="Instrument.PurchaseDate" class="form-control" />
-                <span asp-validation-for="Instrument.PurchaseDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instrument.Reservations" class="control-label"></label>
-                <input asp-for="Instrument.Reservations" class="form-control" />
-                <span asp-validation-for="Instrument.Reservations" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {

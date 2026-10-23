@@ -29,12 +29,12 @@
                             <a class="nav-link" asp-area="" asp-page="/Index"><i class="bi bi-house"></i> 首頁</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Instruments/Index"><i class="bi bi-grid-3x3-gap"></i> 儀器總覽</a>
+                            <a class="nav-link" asp-area="" asp-page="/InstrumentPages/Index"><i class="bi bi-grid-3x3-gap"></i> 儀器總覽</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-page="/Reservations/Index">
+                                <a class="nav-link" asp-area="" asp-page="/ReservationPages/Index">
                                     <i class="bi bi-calendar-check"></i> @(User.IsInRole("Admin") ? "預約審核" : "我的預約")
                                 </a>
                             </li>

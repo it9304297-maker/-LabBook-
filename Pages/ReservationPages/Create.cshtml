@@ -2,105 +2,33 @@
 @model RazorPageBase.Pages.ReservationPages.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "預約儀器";
+    ViewData["InstrumentList"] = Model.InstrumentList;
+    ViewData["Instruments"] = Model.AvailableInstruments;
 }
 
-<h1>Create</h1>
-
-<h4>Reservation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Reservation.InstrumentId" class="control-label"></label>
-                <input asp-for="Reservation.InstrumentId" class="form-control" />
-                <span asp-validation-for="Reservation.InstrumentId" class="text-danger"></span>
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">
+                <h1 class="h4 mb-0"><i class="bi bi-calendar-plus text-primary"></i> 預約儀器</h1>
+                <small class="text-muted">開放時段 08:00–22:00，以 30 分鐘為單位；送出後由管理員審核</small>
             </div>
-            <div class="form-group">
-                <label asp-for="Reservation.Instrument" class="control-label"></label>
-                <input asp-for="Reservation.Instrument" class="form-control" />
-                <span asp-validation-for="Reservation.Instrument" class="text-danger"></span>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <partial name="_ReservationForm" for="Reservation" view-data="ViewData" />
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> 送出申請</button>
+                        <a asp-page="Index" class="btn btn-outline-secondary">取消</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Reservation.UserId" class="control-label"></label>
-                <input asp-for="Reservation.UserId" class="form-control" />
-                <span asp-validation-for="Reservation.UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.UserEmail" class="control-label"></label>
-                <input asp-for="Reservation.UserEmail" class="form-control" />
-                <span asp-validation-for="Reservation.UserEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Reservation.ProjectTitle" class="control-label"></label>
-                <input asp-for="Reservation.ProjectTitle" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Reservation.ProjectTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Reservation.Advisor" class="control-label"></label>
-                <input asp-for="Reservation.Advisor" class="form-control" aria-required="true"/>
-                <span asp-validation-for="Reservation.Advisor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.SampleCount" class="control-label"></label>
-                <input asp-for="Reservation.SampleCount" class="form-control" />
-                <span asp-validation-for="Reservation.SampleCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.StartTime" class="control-label"></label>
-                <input asp-for="Reservation.StartTime" class="form-control" />
-                <span asp-validation-for="Reservation.StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.EndTime" class="control-label"></label>
-                <input asp-for="Reservation.EndTime" class="form-control" />
-                <span asp-validation-for="Reservation.EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.Purpose" class="control-label"></label>
-                <input asp-for="Reservation.Purpose" class="form-control" />
-                <span asp-validation-for="Reservation.Purpose" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.Status" class="control-label"></label>
-                <input asp-for="Reservation.Status" class="form-control" />
-                <span asp-validation-for="Reservation.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.TotalFee" class="control-label"></label>
-                <input asp-for="Reservation.TotalFee" class="form-control" />
-                <span asp-validation-for="Reservation.TotalFee" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.AdminNote" class="control-label"></label>
-                <input asp-for="Reservation.AdminNote" class="form-control" />
-                <span asp-validation-for="Reservation.AdminNote" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.CreatedAt" class="control-label"></label>
-                <input asp-for="Reservation.CreatedAt" class="form-control" />
-                <span asp-validation-for="Reservation.CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reservation.Hours" class="control-label"></label>
-                <input asp-for="Reservation.Hours" class="form-control" />
-                <span asp-validation-for="Reservation.Hours" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/reservation.js" asp-append-version="true"></script>
 }

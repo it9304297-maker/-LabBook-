@@ -10,10 +10,10 @@
         <small class="text-muted">只有 Admin 角色的使用者能進入此頁面</small>
     </div>
     <div class="d-flex gap-2">
-        <a asp-page="/Reservations/Index" asp-route-StatusFilter="Pending" asp-route-Scope="all" class="btn btn-warning">
+        <a asp-page="/ReservationPages/Index" asp-route-StatusFilter="Pending" asp-route-Scope="all" class="btn btn-warning">
             <i class="bi bi-clipboard-check"></i> 審核預約 <span class="badge text-bg-light">@Model.PendingCount</span>
         </a>
-        <a asp-page="/Instruments/Create" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i> 新增儀器</a>
+        <a asp-page="/InstrumentPages/Create" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i> 新增儀器</a>
     </div>
 </div>
 
@@ -69,7 +69,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-header bg-white fw-semibold d-flex justify-content-between">
                 <span><i class="bi bi-inbox"></i> 最近待審核</span>
-                <a asp-page="/Reservations/Index" asp-route-StatusFilter="Pending" asp-route-Scope="all" class="small">全部</a>
+                <a asp-page="/ReservationPages/Index" asp-route-StatusFilter="Pending" asp-route-Scope="all" class="small">全部</a>
             </div>
             <ul class="list-group list-group-flush">
                 @if (!Model.PendingList.Any())

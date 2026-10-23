@@ -3,68 +3,75 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorPageBase.Models;
 
-namespace RazorPageBase.Pages.InstrumentPages;
-
-public class EditModel : PageModel
+namespace RazorPageBase.Pages.InstrumentPages
 {
-    private readonly RazorPageBaseContext _context;
-
-    public EditModel(RazorPageBaseContext context)
+    public class EditModel : PageModel
     {
-        _context = context;
-    }
+        private readonly RazorPageBaseContext _context;
 
-    [BindProperty]
-    public Instrument Instrument { get; set; } = default!;
-
-    public async Task<IActionResult> OnGetAsync(int? id)
-    {
-        if (id is null)
+        public EditModel(RazorPageBaseContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        var instrument = await _context.Instrument.FirstOrDefaultAsync(m => m.Id == id);
-        if (instrument is null)
-        {
-            return NotFound();
-        }
-        Instrument = instrument;
-        return Page();
-    }
+        [BindProperty]
+        public Instrument Instrument { get; set; } = default!;
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see https://aka.ms/RazorPagesCRUD.
-    public async Task<IActionResult> OnPostAsync()
-    {
-        if (!ModelState.IsValid)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            return Page();
-        }
-
-        _context.Attach(Instrument).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!InstrumentExists(Instrument.Id))
+            if (id == null)
             {
                 return NotFound();
             }
-            else
+
+            var instrument = await _context.Instrument.FirstOrDefaultAsync(m => m.Id == id);
+            if (instrument == null)
             {
-                throw;
+                return NotFound();
             }
+            Instrument = instrument;
+            return Page();
         }
 
-        return RedirectToPage("./Index");
-    }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            Instrument.AssetCode = Instrument.AssetCode?.Trim().ToUpper() ?? "";
 
-    private bool InstrumentExists(int id)
-    {
-        return _context.Instrument.Any(e => e.Id == id);
+            if (await _context.Instrument.AnyAsync(i => i.AssetCode == Instrument.AssetCode && i.Id != Instrument.Id))
+            {
+                ModelState.AddModelError("Instrument.AssetCode", "此財產編號已被其他儀器使用");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            _context.Attach(Instrument).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InstrumentExists(Instrument.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            TempData["Success"] = $"已更新儀器「{Instrument.Name}」";
+            return RedirectToPage("./Index");
+        }
+
+        private bool InstrumentExists(int id)
+        {
+            return _context.Instrument.Any(e => e.Id == id);
+        }
     }
 }

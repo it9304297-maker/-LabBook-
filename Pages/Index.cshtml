@@ -11,10 +11,10 @@
             <h1 class="display-5 fw-bold">線上預約實驗室儀器<br />不用再填紙本登記表</h1>
             <p class="lead opacity-75 mb-4">即時查看空檔、自動檢查時段衝突、自動試算費用，管理員線上審核，一站完成。</p>
             <div class="d-flex flex-wrap gap-2">
-                <a asp-page="/Instruments/Index" class="btn btn-light btn-lg"><i class="bi bi-grid-3x3-gap"></i> 瀏覽儀器</a>
+                <a asp-page="/InstrumentPages/Index" class="btn btn-light btn-lg"><i class="bi bi-grid-3x3-gap"></i> 瀏覽儀器</a>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a asp-page="/Reservations/Create" class="btn btn-outline-light btn-lg"><i class="bi bi-calendar-plus"></i> 立即預約</a>
+                    <a asp-page="/ReservationPages/Create" class="btn btn-outline-light btn-lg"><i class="bi bi-calendar-plus"></i> 立即預約</a>
                 }
                 else
                 {
@@ -46,7 +46,7 @@
 <section>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="h4 mb-0">熱門儀器</h2>
-        <a asp-page="/Instruments/Index">查看全部 <i class="bi bi-arrow-right"></i></a>
+        <a asp-page="/InstrumentPages/Index">查看全部 <i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var item in Model.Featured)
@@ -60,7 +60,7 @@
                         <div class="fw-bold text-primary">NT$ @item.HourlyRate.ToString("N0") / 小時</div>
                     </div>
                     <div class="card-footer bg-transparent border-0 pb-3">
-                        <a asp-page="/Instruments/Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">查看詳細與空檔</a>
+                        <a asp-page="/InstrumentPages/Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">查看詳細與空檔</a>
                     </div>
                 </div>
             </div>

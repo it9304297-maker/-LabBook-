@@ -1,0 +1,120 @@
+@page
+@model RazorPageBase.Pages.ReservationPages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].InstrumentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].Instrument)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].UserEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].ProjectTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].Advisor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].SampleCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].Purpose)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].TotalFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].AdminNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].Hours)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Reservation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.InstrumentId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Instrument)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.UserEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ProjectTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Advisor)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.SampleCount)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Purpose)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.TotalFee)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.AdminNote)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Hours)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

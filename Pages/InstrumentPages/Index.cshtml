@@ -1,0 +1,108 @@
+@page
+@model RazorPageBase.Pages.InstrumentPages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].AssetCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].HourlyRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].MaxHoursPerBooking)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].RequiresTraining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Custodian)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instrument[0].Reservations)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Instrument) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.AssetCode)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.HourlyRate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.MaxHoursPerBooking)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.RequiresTraining)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Custodian)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Reservations)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

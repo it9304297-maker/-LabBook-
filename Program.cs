@@ -68,6 +68,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 // 4. Email sender（講義第8頁：把註解拿掉）
 // Gmail 帳號與應用程式密碼請放在「管理使用者密碼」(secrets.json)，不要寫在 appsettings.json
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddSingleton<RazorPageBase.Services.DevMailbox>(); // 開發用信箱
 
 // 5. Razor Pages
 builder.Services.AddRazorPages(options =>

@@ -2,6 +2,7 @@
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
+using RazorPageBase.Services;
 
 /* 
  * 
@@ -33,10 +34,12 @@ await client.ConnectAsync("://gmail.com", 465, SecureSocketOptions.SslOnConnect)
 public class EmailSender : IEmailSender
 {
     private readonly IConfiguration _configuration;
+    private readonly DevMailbox _devMailbox; // 開發用信箱（未設定 Gmail 密碼時使用）
 
-    public EmailSender(IConfiguration configuration)
+    public EmailSender(IConfiguration configuration, DevMailbox devMailbox)
     {
         _configuration = configuration;
+        _devMailbox = devMailbox;
     }
 
     public async Task SendEmailAsync(
@@ -56,6 +59,14 @@ public class EmailSender : IEmailSender
 
         var username = _configuration["Email:UserName"];
         var password = _configuration["Email:Password"];
+
+        // 尚未設定 Gmail 應用程式密碼 → 驗證信改存到「開發用信箱」(/DevMailbox)
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            _devMailbox.Add(email, subject, htmlMessage, "尚未設定 Gmail 應用程式密碼，信件存放於開發用信箱");
+            Console.WriteLine("未設定 Gmail 密碼，驗證信已存入開發用信箱 /DevMailbox for 註冊會員:" + email);
+            return;
+        }
 
         var message = new MimeMessage();
 
@@ -97,6 +108,8 @@ public class EmailSender : IEmailSender
         catch (Exception ex)
         {
             Console.WriteLine($"Gmail 郵件發送失敗！{ex.Message} for 註冊會員:" + MailboxAddress.Parse(email));
+            // 寄送失敗時也存一份到開發用信箱，避免使用者無法驗證
+            _devMailbox.Add(email, subject, htmlMessage, $"Gmail 寄送失敗：{ex.Message}");
         }
         finally
         {

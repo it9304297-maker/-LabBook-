@@ -1,0 +1,41 @@
+@page
+@model RazorPageBase.Pages.DevMailboxModel
+@{
+    ViewData["Title"] = "開發用信箱";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <div>
+        <h1 class="h3 mb-0"><i class="bi bi-envelope-paper text-primary"></i> 開發用信箱</h1>
+        <small class="text-muted">尚未設定 Gmail 應用程式密碼（或寄送失敗）時，系統寄出的信會出現在這裡。僅限開發環境，程式重啟後清空。</small>
+    </div>
+    <a asp-page="/DevMailbox" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> 重新整理</a>
+</div>
+
+@if (!Model.Mails.Any())
+{
+    <div class="alert alert-light border text-center py-5">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        目前沒有信件。到 <a asp-area="Identity" asp-page="/Account/Register">註冊頁面</a> 註冊一個新帳號試試看。
+    </div>
+}
+
+@foreach (var mail in Model.Mails)
+{
+    <div class="card shadow-sm border-0 mb-3">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between gap-2">
+            <div>
+                <span class="fw-semibold">@mail.Subject</span>
+                <div class="small text-muted">收件人：@mail.To</div>
+            </div>
+            <small class="text-muted">@mail.SentAt.ToString("yyyy/MM/dd HH:mm:ss")</small>
+        </div>
+        <div class="card-body">
+            @* 信件內容由 ASP.NET Core Identity 產生（含驗證連結） *@
+            @Html.Raw(mail.HtmlBody)
+        </div>
+        <div class="card-footer bg-transparent small text-muted">
+            <i class="bi bi-info-circle"></i> @mail.Note
+        </div>
+    </div>
+}

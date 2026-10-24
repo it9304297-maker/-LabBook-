@@ -33,6 +33,58 @@
     </div>
 </section>
 
+<section class="mb-5" id="about">
+    <h2 class="h4 mb-1 text-center">系統簡介</h2>
+    <p class="text-center text-muted mb-4">LabBook 是一套讓研究生線上預約學校貴重儀器的網頁系統，以 ASP.NET Core Razor Pages 開發。</p>
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card h-100 border-0 shadow-sm about-card">
+                <div class="card-body">
+                    <span class="icon-circle mb-3"><i class="bi bi-exclamation-diamond"></i></span>
+                    <h3 class="h5">要解決的問題</h3>
+                    <ul class="small text-muted mb-0 ps-3">
+                        <li>紙本登記看不到空檔，常常撞時段</li>
+                        <li>費用要人工計算，容易出錯</li>
+                        <li>管理員不清楚哪台儀器最常被使用，難以規劃保養與採購</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card h-100 border-0 shadow-sm about-card">
+                <div class="card-body">
+                    <span class="icon-circle mb-3"><i class="bi bi-ui-checks-grid"></i></span>
+                    <h3 class="h5">主要功能</h3>
+                    <ul class="small text-muted mb-0 ps-3">
+                        <li><strong>儀器總覽</strong>：依名稱、類別、地點搜尋，查看收費與未來兩週空檔</li>
+                        <li><strong>線上預約</strong>：自動檢查時段衝突與時數上限，即時計算費用</li>
+                        <li><strong>審核流程</strong>：管理員核准、退回（附原因）、標記完成</li>
+                        <li><strong>管理後台</strong>：各儀器使用率、本月收入、待審核件數</li>
+                        <li><strong>會員系統</strong>：Gmail 註冊驗證信，管理員／一般使用者兩種權限</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card h-100 border-0 shadow-sm about-card">
+                <div class="card-body">
+                    <span class="icon-circle mb-3"><i class="bi bi-code-slash"></i></span>
+                    <h3 class="h5">使用技術</h3>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge rounded-pill tech-badge">ASP.NET Core Razor Pages</span>
+                        <span class="badge rounded-pill tech-badge">Entity Framework Core</span>
+                        <span class="badge rounded-pill tech-badge">SQL Server LocalDB</span>
+                        <span class="badge rounded-pill tech-badge">ASP.NET Core Identity</span>
+                        <span class="badge rounded-pill tech-badge">Bootstrap 5</span>
+                        <span class="badge rounded-pill tech-badge">MailKit（Gmail SMTP）</span>
+                    </div>
+                    <p class="small text-muted mt-3 mb-0">E383 網頁程式設計(二) 期中作業</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="mb-5">
     <h2 class="h4 mb-4 text-center">預約流程</h2>
     <div class="row g-4 text-center">

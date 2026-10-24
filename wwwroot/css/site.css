@@ -136,3 +136,8 @@ body {
   .navbar, .footer, .breadcrumb, .d-print-none { display: none !important; }
   body { background: #fff; }
 }
+
+/* 首頁：系統簡介 */
+.about-card { border-top: 4px solid var(--lab-primary) !important; }
+.about-card li { margin-bottom: .35rem; }
+.tech-badge { background: rgba(15, 92, 140, .1); color: var(--lab-primary); font-weight: 500; padding: .45em .8em; }
